@@ -7,7 +7,7 @@ MAVPACKED(
 typedef struct __mavlink_eeprom_page_t {
  uint32_t index; /*<   The eeprom board index, 0 indexed */
  uint32_t page_num; /*<   Page number, 0 indexed */
- uint8_t target_system; /*<  System ID*/
+ uint8_t target_system; /*<   System ID */
  char page_data[16]; /*<   Opaque page data */
 }) mavlink_eeprom_page_t;
 
@@ -50,7 +50,7 @@ typedef struct __mavlink_eeprom_page_t {
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param target_system  System ID
+ * @param target_system   System ID 
  * @param index   The eeprom board index, 0 indexed 
  * @param page_data   Opaque page data 
  * @param page_num   Page number, 0 indexed 
@@ -85,7 +85,7 @@ static inline uint16_t mavlink_msg_eeprom_page_pack(uint8_t system_id, uint8_t c
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param target_system  System ID
+ * @param target_system   System ID 
  * @param index   The eeprom board index, 0 indexed 
  * @param page_data   Opaque page data 
  * @param page_num   Page number, 0 indexed 
@@ -146,7 +146,7 @@ static inline uint16_t mavlink_msg_eeprom_page_encode_chan(uint8_t system_id, ui
  * @brief Send a eeprom_page message
  * @param chan MAVLink channel to send the message
  *
- * @param target_system  System ID
+ * @param target_system   System ID 
  * @param index   The eeprom board index, 0 indexed 
  * @param page_data   Opaque page data 
  * @param page_num   Page number, 0 indexed 
@@ -222,7 +222,7 @@ static inline void mavlink_msg_eeprom_page_send_buf(mavlink_message_t *msgbuf, m
 /**
  * @brief Get field target_system from eeprom_page message
  *
- * @return  System ID
+ * @return   System ID 
  */
 static inline uint8_t mavlink_msg_eeprom_page_get_target_system(const mavlink_message_t* msg)
 {

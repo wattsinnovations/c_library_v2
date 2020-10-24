@@ -5,7 +5,7 @@
 
 MAVPACKED(
 typedef struct __mavlink_network_status_t {
- uint8_t target_system; /*<  System ID*/
+ uint8_t target_system; /*<   System ID */
  uint8_t connected; /*<   Boolean indcator to determine connection to internet */
  char ssid[32]; /*<   SSID name -- 802.11 standard 32 characters max */
 }) mavlink_network_status_t;
@@ -47,7 +47,7 @@ typedef struct __mavlink_network_status_t {
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param target_system  System ID
+ * @param target_system   System ID 
  * @param connected   Boolean indcator to determine connection to internet 
  * @param ssid   SSID name -- 802.11 standard 32 characters max 
  * @return length of the message in bytes (excluding serial stream start sign)
@@ -79,7 +79,7 @@ static inline uint16_t mavlink_msg_network_status_pack(uint8_t system_id, uint8_
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param target_system  System ID
+ * @param target_system   System ID 
  * @param connected   Boolean indcator to determine connection to internet 
  * @param ssid   SSID name -- 802.11 standard 32 characters max 
  * @return length of the message in bytes (excluding serial stream start sign)
@@ -137,7 +137,7 @@ static inline uint16_t mavlink_msg_network_status_encode_chan(uint8_t system_id,
  * @brief Send a network_status message
  * @param chan MAVLink channel to send the message
  *
- * @param target_system  System ID
+ * @param target_system   System ID 
  * @param connected   Boolean indcator to determine connection to internet 
  * @param ssid   SSID name -- 802.11 standard 32 characters max 
  */
@@ -208,7 +208,7 @@ static inline void mavlink_msg_network_status_send_buf(mavlink_message_t *msgbuf
 /**
  * @brief Get field target_system from network_status message
  *
- * @return  System ID
+ * @return   System ID 
  */
 static inline uint8_t mavlink_msg_network_status_get_target_system(const mavlink_message_t* msg)
 {

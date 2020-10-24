@@ -5,7 +5,7 @@
 
 MAVPACKED(
 typedef struct __mavlink_network_connection_request_t {
- uint8_t target_system; /*<  System ID*/
+ uint8_t target_system; /*<   System ID */
  char ssid[32]; /*<   SSID name -- 802.11 standard 32 characters max */
  char password[64]; /*<   Network password -- WPA2 up to 63 characters */
 }) mavlink_network_connection_request_t;
@@ -48,7 +48,7 @@ typedef struct __mavlink_network_connection_request_t {
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param target_system  System ID
+ * @param target_system   System ID 
  * @param ssid   SSID name -- 802.11 standard 32 characters max 
  * @param password   Network password -- WPA2 up to 63 characters 
  * @return length of the message in bytes (excluding serial stream start sign)
@@ -80,7 +80,7 @@ static inline uint16_t mavlink_msg_network_connection_request_pack(uint8_t syste
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param target_system  System ID
+ * @param target_system   System ID 
  * @param ssid   SSID name -- 802.11 standard 32 characters max 
  * @param password   Network password -- WPA2 up to 63 characters 
  * @return length of the message in bytes (excluding serial stream start sign)
@@ -138,7 +138,7 @@ static inline uint16_t mavlink_msg_network_connection_request_encode_chan(uint8_
  * @brief Send a network_connection_request message
  * @param chan MAVLink channel to send the message
  *
- * @param target_system  System ID
+ * @param target_system   System ID 
  * @param ssid   SSID name -- 802.11 standard 32 characters max 
  * @param password   Network password -- WPA2 up to 63 characters 
  */
@@ -209,7 +209,7 @@ static inline void mavlink_msg_network_connection_request_send_buf(mavlink_messa
 /**
  * @brief Get field target_system from network_connection_request message
  *
- * @return  System ID
+ * @return   System ID 
  */
 static inline uint8_t mavlink_msg_network_connection_request_get_target_system(const mavlink_message_t* msg)
 {
