@@ -215,14 +215,15 @@ static void mavlink_test_prism_version_info(uint8_t system_id, uint8_t component
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
     mavlink_prism_version_info_t packet_in = {
-        5,72,"CDEFGHIJKLMNOPQRSTUVWXYZABCDEFG"
+        5,72,"CDEFGHIJKLMNOPQ","STUVWXYZABCDEFG"
     };
     mavlink_prism_version_info_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
         packet1.target_system = packet_in.target_system;
         packet1.is_current_version = packet_in.is_current_version;
         
-        mav_array_memcpy(packet1.version_string, packet_in.version_string, sizeof(char)*32);
+        mav_array_memcpy(packet1.component_name, packet_in.component_name, sizeof(char)*16);
+        mav_array_memcpy(packet1.version, packet_in.version, sizeof(char)*16);
         
 #ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
         if (status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) {
@@ -236,12 +237,12 @@ static void mavlink_test_prism_version_info(uint8_t system_id, uint8_t component
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_prism_version_info_pack(system_id, component_id, &msg , packet1.target_system , packet1.is_current_version , packet1.version_string );
+    mavlink_msg_prism_version_info_pack(system_id, component_id, &msg , packet1.target_system , packet1.is_current_version , packet1.component_name , packet1.version );
     mavlink_msg_prism_version_info_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_prism_version_info_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.target_system , packet1.is_current_version , packet1.version_string );
+    mavlink_msg_prism_version_info_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.target_system , packet1.is_current_version , packet1.component_name , packet1.version );
     mavlink_msg_prism_version_info_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -254,7 +255,7 @@ static void mavlink_test_prism_version_info(uint8_t system_id, uint8_t component
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_prism_version_info_send(MAVLINK_COMM_1 , packet1.target_system , packet1.is_current_version , packet1.version_string );
+    mavlink_msg_prism_version_info_send(MAVLINK_COMM_1 , packet1.target_system , packet1.is_current_version , packet1.component_name , packet1.version );
     mavlink_msg_prism_version_info_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
@@ -271,13 +272,13 @@ static void mavlink_test_software_update_request(uint8_t system_id, uint8_t comp
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
     mavlink_software_update_request_t packet_in = {
-        5,"BCDEFGHIJKLMNOPQRSTUVWXYZABCDEF"
+        5,"BCDEFGHIJKLMNOP"
     };
     mavlink_software_update_request_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
         packet1.target_system = packet_in.target_system;
         
-        mav_array_memcpy(packet1.release_string, packet_in.release_string, sizeof(char)*32);
+        mav_array_memcpy(packet1.release_string, packet_in.release_string, sizeof(char)*16);
         
 #ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
         if (status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) {

@@ -7,7 +7,8 @@ MAVPACKED(
 typedef struct __mavlink_prism_version_info_t {
  uint8_t target_system; /*<   System ID */
  uint8_t is_current_version; /*<   Boolean indicating if this is the current version */
- char version_string[32]; /*<   Name of version */
+ char component_name[16]; /*<   Name of component */
+ char version[16]; /*<   Version */
 }) mavlink_prism_version_info_t;
 
 #define MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN 34
@@ -15,28 +16,31 @@ typedef struct __mavlink_prism_version_info_t {
 #define MAVLINK_MSG_ID_13004_LEN 34
 #define MAVLINK_MSG_ID_13004_MIN_LEN 34
 
-#define MAVLINK_MSG_ID_PRISM_VERSION_INFO_CRC 118
-#define MAVLINK_MSG_ID_13004_CRC 118
+#define MAVLINK_MSG_ID_PRISM_VERSION_INFO_CRC 51
+#define MAVLINK_MSG_ID_13004_CRC 51
 
-#define MAVLINK_MSG_PRISM_VERSION_INFO_FIELD_VERSION_STRING_LEN 32
+#define MAVLINK_MSG_PRISM_VERSION_INFO_FIELD_COMPONENT_NAME_LEN 16
+#define MAVLINK_MSG_PRISM_VERSION_INFO_FIELD_VERSION_LEN 16
 
 #if MAVLINK_COMMAND_24BIT
 #define MAVLINK_MESSAGE_INFO_PRISM_VERSION_INFO { \
     13004, \
     "PRISM_VERSION_INFO", \
-    3, \
+    4, \
     {  { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_prism_version_info_t, target_system) }, \
          { "is_current_version", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_prism_version_info_t, is_current_version) }, \
-         { "version_string", NULL, MAVLINK_TYPE_CHAR, 32, 2, offsetof(mavlink_prism_version_info_t, version_string) }, \
+         { "component_name", NULL, MAVLINK_TYPE_CHAR, 16, 2, offsetof(mavlink_prism_version_info_t, component_name) }, \
+         { "version", NULL, MAVLINK_TYPE_CHAR, 16, 18, offsetof(mavlink_prism_version_info_t, version) }, \
          } \
 }
 #else
 #define MAVLINK_MESSAGE_INFO_PRISM_VERSION_INFO { \
     "PRISM_VERSION_INFO", \
-    3, \
+    4, \
     {  { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_prism_version_info_t, target_system) }, \
          { "is_current_version", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_prism_version_info_t, is_current_version) }, \
-         { "version_string", NULL, MAVLINK_TYPE_CHAR, 32, 2, offsetof(mavlink_prism_version_info_t, version_string) }, \
+         { "component_name", NULL, MAVLINK_TYPE_CHAR, 16, 2, offsetof(mavlink_prism_version_info_t, component_name) }, \
+         { "version", NULL, MAVLINK_TYPE_CHAR, 16, 18, offsetof(mavlink_prism_version_info_t, version) }, \
          } \
 }
 #endif
@@ -49,23 +53,26 @@ typedef struct __mavlink_prism_version_info_t {
  *
  * @param target_system   System ID 
  * @param is_current_version   Boolean indicating if this is the current version 
- * @param version_string   Name of version 
+ * @param component_name   Name of component 
+ * @param version   Version 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_prism_version_info_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint8_t target_system, uint8_t is_current_version, const char *version_string)
+                               uint8_t target_system, uint8_t is_current_version, const char *component_name, const char *version)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN];
     _mav_put_uint8_t(buf, 0, target_system);
     _mav_put_uint8_t(buf, 1, is_current_version);
-    _mav_put_char_array(buf, 2, version_string, 32);
+    _mav_put_char_array(buf, 2, component_name, 16);
+    _mav_put_char_array(buf, 18, version, 16);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN);
 #else
     mavlink_prism_version_info_t packet;
     packet.target_system = target_system;
     packet.is_current_version = is_current_version;
-    mav_array_memcpy(packet.version_string, version_string, sizeof(char)*32);
+    mav_array_memcpy(packet.component_name, component_name, sizeof(char)*16);
+    mav_array_memcpy(packet.version, version, sizeof(char)*16);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN);
 #endif
 
@@ -81,24 +88,27 @@ static inline uint16_t mavlink_msg_prism_version_info_pack(uint8_t system_id, ui
  * @param msg The MAVLink message to compress the data into
  * @param target_system   System ID 
  * @param is_current_version   Boolean indicating if this is the current version 
- * @param version_string   Name of version 
+ * @param component_name   Name of component 
+ * @param version   Version 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_prism_version_info_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint8_t target_system,uint8_t is_current_version,const char *version_string)
+                                   uint8_t target_system,uint8_t is_current_version,const char *component_name,const char *version)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN];
     _mav_put_uint8_t(buf, 0, target_system);
     _mav_put_uint8_t(buf, 1, is_current_version);
-    _mav_put_char_array(buf, 2, version_string, 32);
+    _mav_put_char_array(buf, 2, component_name, 16);
+    _mav_put_char_array(buf, 18, version, 16);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN);
 #else
     mavlink_prism_version_info_t packet;
     packet.target_system = target_system;
     packet.is_current_version = is_current_version;
-    mav_array_memcpy(packet.version_string, version_string, sizeof(char)*32);
+    mav_array_memcpy(packet.component_name, component_name, sizeof(char)*16);
+    mav_array_memcpy(packet.version, version, sizeof(char)*16);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN);
 #endif
 
@@ -116,7 +126,7 @@ static inline uint16_t mavlink_msg_prism_version_info_pack_chan(uint8_t system_i
  */
 static inline uint16_t mavlink_msg_prism_version_info_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_prism_version_info_t* prism_version_info)
 {
-    return mavlink_msg_prism_version_info_pack(system_id, component_id, msg, prism_version_info->target_system, prism_version_info->is_current_version, prism_version_info->version_string);
+    return mavlink_msg_prism_version_info_pack(system_id, component_id, msg, prism_version_info->target_system, prism_version_info->is_current_version, prism_version_info->component_name, prism_version_info->version);
 }
 
 /**
@@ -130,7 +140,7 @@ static inline uint16_t mavlink_msg_prism_version_info_encode(uint8_t system_id, 
  */
 static inline uint16_t mavlink_msg_prism_version_info_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_prism_version_info_t* prism_version_info)
 {
-    return mavlink_msg_prism_version_info_pack_chan(system_id, component_id, chan, msg, prism_version_info->target_system, prism_version_info->is_current_version, prism_version_info->version_string);
+    return mavlink_msg_prism_version_info_pack_chan(system_id, component_id, chan, msg, prism_version_info->target_system, prism_version_info->is_current_version, prism_version_info->component_name, prism_version_info->version);
 }
 
 /**
@@ -139,23 +149,26 @@ static inline uint16_t mavlink_msg_prism_version_info_encode_chan(uint8_t system
  *
  * @param target_system   System ID 
  * @param is_current_version   Boolean indicating if this is the current version 
- * @param version_string   Name of version 
+ * @param component_name   Name of component 
+ * @param version   Version 
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_prism_version_info_send(mavlink_channel_t chan, uint8_t target_system, uint8_t is_current_version, const char *version_string)
+static inline void mavlink_msg_prism_version_info_send(mavlink_channel_t chan, uint8_t target_system, uint8_t is_current_version, const char *component_name, const char *version)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN];
     _mav_put_uint8_t(buf, 0, target_system);
     _mav_put_uint8_t(buf, 1, is_current_version);
-    _mav_put_char_array(buf, 2, version_string, 32);
+    _mav_put_char_array(buf, 2, component_name, 16);
+    _mav_put_char_array(buf, 18, version, 16);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_PRISM_VERSION_INFO, buf, MAVLINK_MSG_ID_PRISM_VERSION_INFO_MIN_LEN, MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN, MAVLINK_MSG_ID_PRISM_VERSION_INFO_CRC);
 #else
     mavlink_prism_version_info_t packet;
     packet.target_system = target_system;
     packet.is_current_version = is_current_version;
-    mav_array_memcpy(packet.version_string, version_string, sizeof(char)*32);
+    mav_array_memcpy(packet.component_name, component_name, sizeof(char)*16);
+    mav_array_memcpy(packet.version, version, sizeof(char)*16);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_PRISM_VERSION_INFO, (const char *)&packet, MAVLINK_MSG_ID_PRISM_VERSION_INFO_MIN_LEN, MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN, MAVLINK_MSG_ID_PRISM_VERSION_INFO_CRC);
 #endif
 }
@@ -168,7 +181,7 @@ static inline void mavlink_msg_prism_version_info_send(mavlink_channel_t chan, u
 static inline void mavlink_msg_prism_version_info_send_struct(mavlink_channel_t chan, const mavlink_prism_version_info_t* prism_version_info)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_prism_version_info_send(chan, prism_version_info->target_system, prism_version_info->is_current_version, prism_version_info->version_string);
+    mavlink_msg_prism_version_info_send(chan, prism_version_info->target_system, prism_version_info->is_current_version, prism_version_info->component_name, prism_version_info->version);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_PRISM_VERSION_INFO, (const char *)prism_version_info, MAVLINK_MSG_ID_PRISM_VERSION_INFO_MIN_LEN, MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN, MAVLINK_MSG_ID_PRISM_VERSION_INFO_CRC);
 #endif
@@ -182,19 +195,21 @@ static inline void mavlink_msg_prism_version_info_send_struct(mavlink_channel_t 
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_prism_version_info_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t target_system, uint8_t is_current_version, const char *version_string)
+static inline void mavlink_msg_prism_version_info_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t target_system, uint8_t is_current_version, const char *component_name, const char *version)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
     _mav_put_uint8_t(buf, 0, target_system);
     _mav_put_uint8_t(buf, 1, is_current_version);
-    _mav_put_char_array(buf, 2, version_string, 32);
+    _mav_put_char_array(buf, 2, component_name, 16);
+    _mav_put_char_array(buf, 18, version, 16);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_PRISM_VERSION_INFO, buf, MAVLINK_MSG_ID_PRISM_VERSION_INFO_MIN_LEN, MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN, MAVLINK_MSG_ID_PRISM_VERSION_INFO_CRC);
 #else
     mavlink_prism_version_info_t *packet = (mavlink_prism_version_info_t *)msgbuf;
     packet->target_system = target_system;
     packet->is_current_version = is_current_version;
-    mav_array_memcpy(packet->version_string, version_string, sizeof(char)*32);
+    mav_array_memcpy(packet->component_name, component_name, sizeof(char)*16);
+    mav_array_memcpy(packet->version, version, sizeof(char)*16);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_PRISM_VERSION_INFO, (const char *)packet, MAVLINK_MSG_ID_PRISM_VERSION_INFO_MIN_LEN, MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN, MAVLINK_MSG_ID_PRISM_VERSION_INFO_CRC);
 #endif
 }
@@ -226,13 +241,23 @@ static inline uint8_t mavlink_msg_prism_version_info_get_is_current_version(cons
 }
 
 /**
- * @brief Get field version_string from prism_version_info message
+ * @brief Get field component_name from prism_version_info message
  *
- * @return   Name of version 
+ * @return   Name of component 
  */
-static inline uint16_t mavlink_msg_prism_version_info_get_version_string(const mavlink_message_t* msg, char *version_string)
+static inline uint16_t mavlink_msg_prism_version_info_get_component_name(const mavlink_message_t* msg, char *component_name)
 {
-    return _MAV_RETURN_char_array(msg, version_string, 32,  2);
+    return _MAV_RETURN_char_array(msg, component_name, 16,  2);
+}
+
+/**
+ * @brief Get field version from prism_version_info message
+ *
+ * @return   Version 
+ */
+static inline uint16_t mavlink_msg_prism_version_info_get_version(const mavlink_message_t* msg, char *version)
+{
+    return _MAV_RETURN_char_array(msg, version, 16,  18);
 }
 
 /**
@@ -246,7 +271,8 @@ static inline void mavlink_msg_prism_version_info_decode(const mavlink_message_t
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     prism_version_info->target_system = mavlink_msg_prism_version_info_get_target_system(msg);
     prism_version_info->is_current_version = mavlink_msg_prism_version_info_get_is_current_version(msg);
-    mavlink_msg_prism_version_info_get_version_string(msg, prism_version_info->version_string);
+    mavlink_msg_prism_version_info_get_component_name(msg, prism_version_info->component_name);
+    mavlink_msg_prism_version_info_get_version(msg, prism_version_info->version);
 #else
         uint8_t len = msg->len < MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN? msg->len : MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN;
         memset(prism_version_info, 0, MAVLINK_MSG_ID_PRISM_VERSION_INFO_LEN);

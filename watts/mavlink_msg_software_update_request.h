@@ -6,18 +6,18 @@
 MAVPACKED(
 typedef struct __mavlink_software_update_request_t {
  uint8_t target_system; /*<   System ID */
- char release_string[32]; /*<   Name of release to update to */
+ char release_string[16]; /*<   Name of release to update to */
 }) mavlink_software_update_request_t;
 
-#define MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_LEN 33
-#define MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_MIN_LEN 33
-#define MAVLINK_MSG_ID_13005_LEN 33
-#define MAVLINK_MSG_ID_13005_MIN_LEN 33
+#define MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_LEN 17
+#define MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_MIN_LEN 17
+#define MAVLINK_MSG_ID_13005_LEN 17
+#define MAVLINK_MSG_ID_13005_MIN_LEN 17
 
-#define MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_CRC 107
-#define MAVLINK_MSG_ID_13005_CRC 107
+#define MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_CRC 217
+#define MAVLINK_MSG_ID_13005_CRC 217
 
-#define MAVLINK_MSG_SOFTWARE_UPDATE_REQUEST_FIELD_RELEASE_STRING_LEN 32
+#define MAVLINK_MSG_SOFTWARE_UPDATE_REQUEST_FIELD_RELEASE_STRING_LEN 16
 
 #if MAVLINK_COMMAND_24BIT
 #define MAVLINK_MESSAGE_INFO_SOFTWARE_UPDATE_REQUEST { \
@@ -25,7 +25,7 @@ typedef struct __mavlink_software_update_request_t {
     "SOFTWARE_UPDATE_REQUEST", \
     2, \
     {  { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_software_update_request_t, target_system) }, \
-         { "release_string", NULL, MAVLINK_TYPE_CHAR, 32, 1, offsetof(mavlink_software_update_request_t, release_string) }, \
+         { "release_string", NULL, MAVLINK_TYPE_CHAR, 16, 1, offsetof(mavlink_software_update_request_t, release_string) }, \
          } \
 }
 #else
@@ -33,7 +33,7 @@ typedef struct __mavlink_software_update_request_t {
     "SOFTWARE_UPDATE_REQUEST", \
     2, \
     {  { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_software_update_request_t, target_system) }, \
-         { "release_string", NULL, MAVLINK_TYPE_CHAR, 32, 1, offsetof(mavlink_software_update_request_t, release_string) }, \
+         { "release_string", NULL, MAVLINK_TYPE_CHAR, 16, 1, offsetof(mavlink_software_update_request_t, release_string) }, \
          } \
 }
 #endif
@@ -54,12 +54,12 @@ static inline uint16_t mavlink_msg_software_update_request_pack(uint8_t system_i
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_LEN];
     _mav_put_uint8_t(buf, 0, target_system);
-    _mav_put_char_array(buf, 1, release_string, 32);
+    _mav_put_char_array(buf, 1, release_string, 16);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_LEN);
 #else
     mavlink_software_update_request_t packet;
     packet.target_system = target_system;
-    mav_array_memcpy(packet.release_string, release_string, sizeof(char)*32);
+    mav_array_memcpy(packet.release_string, release_string, sizeof(char)*16);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_LEN);
 #endif
 
@@ -84,12 +84,12 @@ static inline uint16_t mavlink_msg_software_update_request_pack_chan(uint8_t sys
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_LEN];
     _mav_put_uint8_t(buf, 0, target_system);
-    _mav_put_char_array(buf, 1, release_string, 32);
+    _mav_put_char_array(buf, 1, release_string, 16);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_LEN);
 #else
     mavlink_software_update_request_t packet;
     packet.target_system = target_system;
-    mav_array_memcpy(packet.release_string, release_string, sizeof(char)*32);
+    mav_array_memcpy(packet.release_string, release_string, sizeof(char)*16);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_LEN);
 #endif
 
@@ -138,12 +138,12 @@ static inline void mavlink_msg_software_update_request_send(mavlink_channel_t ch
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_LEN];
     _mav_put_uint8_t(buf, 0, target_system);
-    _mav_put_char_array(buf, 1, release_string, 32);
+    _mav_put_char_array(buf, 1, release_string, 16);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST, buf, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_MIN_LEN, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_LEN, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_CRC);
 #else
     mavlink_software_update_request_t packet;
     packet.target_system = target_system;
-    mav_array_memcpy(packet.release_string, release_string, sizeof(char)*32);
+    mav_array_memcpy(packet.release_string, release_string, sizeof(char)*16);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST, (const char *)&packet, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_MIN_LEN, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_LEN, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_CRC);
 #endif
 }
@@ -175,12 +175,12 @@ static inline void mavlink_msg_software_update_request_send_buf(mavlink_message_
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
     _mav_put_uint8_t(buf, 0, target_system);
-    _mav_put_char_array(buf, 1, release_string, 32);
+    _mav_put_char_array(buf, 1, release_string, 16);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST, buf, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_MIN_LEN, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_LEN, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_CRC);
 #else
     mavlink_software_update_request_t *packet = (mavlink_software_update_request_t *)msgbuf;
     packet->target_system = target_system;
-    mav_array_memcpy(packet->release_string, release_string, sizeof(char)*32);
+    mav_array_memcpy(packet->release_string, release_string, sizeof(char)*16);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST, (const char *)packet, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_MIN_LEN, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_LEN, MAVLINK_MSG_ID_SOFTWARE_UPDATE_REQUEST_CRC);
 #endif
 }
@@ -208,7 +208,7 @@ static inline uint8_t mavlink_msg_software_update_request_get_target_system(cons
  */
 static inline uint16_t mavlink_msg_software_update_request_get_release_string(const mavlink_message_t* msg, char *release_string)
 {
-    return _MAV_RETURN_char_array(msg, release_string, 32,  1);
+    return _MAV_RETURN_char_array(msg, release_string, 16,  1);
 }
 
 /**
