@@ -382,11 +382,13 @@ static void mavlink_test_prism_propulsion_id(uint8_t system_id, uint8_t componen
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
     mavlink_prism_propulsion_id_t packet_in = {
-        5,72
+        93372036854775807ULL,29,96,163
     };
     mavlink_prism_propulsion_id_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
+        packet1.flight_time = packet_in.flight_time;
         packet1.target_system = packet_in.target_system;
+        packet1.eeprom_index = packet_in.eeprom_index;
         packet1.id = packet_in.id;
         
         
@@ -402,12 +404,12 @@ static void mavlink_test_prism_propulsion_id(uint8_t system_id, uint8_t componen
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_prism_propulsion_id_pack(system_id, component_id, &msg , packet1.target_system , packet1.id );
+    mavlink_msg_prism_propulsion_id_pack(system_id, component_id, &msg , packet1.target_system , packet1.eeprom_index , packet1.id , packet1.flight_time );
     mavlink_msg_prism_propulsion_id_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_prism_propulsion_id_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.target_system , packet1.id );
+    mavlink_msg_prism_propulsion_id_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.target_system , packet1.eeprom_index , packet1.id , packet1.flight_time );
     mavlink_msg_prism_propulsion_id_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -420,7 +422,7 @@ static void mavlink_test_prism_propulsion_id(uint8_t system_id, uint8_t componen
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_prism_propulsion_id_send(MAVLINK_COMM_1 , packet1.target_system , packet1.id );
+    mavlink_msg_prism_propulsion_id_send(MAVLINK_COMM_1 , packet1.target_system , packet1.eeprom_index , packet1.id , packet1.flight_time );
     mavlink_msg_prism_propulsion_id_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
