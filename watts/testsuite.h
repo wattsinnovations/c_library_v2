@@ -327,12 +327,13 @@ static void mavlink_test_prism_vehicle_info(uint8_t system_id, uint8_t component
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
     mavlink_prism_vehicle_info_t packet_in = {
-        93372036854775807ULL,29
+        93372036854775807ULL,29,96
     };
     mavlink_prism_vehicle_info_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
         packet1.flight_time = packet_in.flight_time;
         packet1.target_system = packet_in.target_system;
+        packet1.fpv_camera_selected = packet_in.fpv_camera_selected;
         
         
 #ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
@@ -347,12 +348,12 @@ static void mavlink_test_prism_vehicle_info(uint8_t system_id, uint8_t component
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_prism_vehicle_info_pack(system_id, component_id, &msg , packet1.target_system , packet1.flight_time );
+    mavlink_msg_prism_vehicle_info_pack(system_id, component_id, &msg , packet1.target_system , packet1.flight_time , packet1.fpv_camera_selected );
     mavlink_msg_prism_vehicle_info_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_prism_vehicle_info_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.target_system , packet1.flight_time );
+    mavlink_msg_prism_vehicle_info_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.target_system , packet1.flight_time , packet1.fpv_camera_selected );
     mavlink_msg_prism_vehicle_info_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -365,7 +366,7 @@ static void mavlink_test_prism_vehicle_info(uint8_t system_id, uint8_t component
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_prism_vehicle_info_send(MAVLINK_COMM_1 , packet1.target_system , packet1.flight_time );
+    mavlink_msg_prism_vehicle_info_send(MAVLINK_COMM_1 , packet1.target_system , packet1.flight_time , packet1.fpv_camera_selected );
     mavlink_msg_prism_vehicle_info_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
