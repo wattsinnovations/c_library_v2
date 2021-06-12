@@ -8,15 +8,16 @@ typedef struct __mavlink_prism_vehicle_info_t {
  uint64_t flight_time; /*<   Total recorded flight time */
  uint8_t target_system; /*<   System ID */
  uint8_t fpv_camera_selected; /*<   Value is zero if not selected */
+ uint8_t kargo_box_loaded; /*<   Value is 0 if the box is not loaded */
 }) mavlink_prism_vehicle_info_t;
 
-#define MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN 10
-#define MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_MIN_LEN 10
-#define MAVLINK_MSG_ID_13006_LEN 10
-#define MAVLINK_MSG_ID_13006_MIN_LEN 10
+#define MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN 11
+#define MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_MIN_LEN 11
+#define MAVLINK_MSG_ID_13006_LEN 11
+#define MAVLINK_MSG_ID_13006_MIN_LEN 11
 
-#define MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_CRC 54
-#define MAVLINK_MSG_ID_13006_CRC 54
+#define MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_CRC 180
+#define MAVLINK_MSG_ID_13006_CRC 180
 
 
 
@@ -24,19 +25,21 @@ typedef struct __mavlink_prism_vehicle_info_t {
 #define MAVLINK_MESSAGE_INFO_PRISM_VEHICLE_INFO { \
     13006, \
     "PRISM_VEHICLE_INFO", \
-    3, \
+    4, \
     {  { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 8, offsetof(mavlink_prism_vehicle_info_t, target_system) }, \
          { "flight_time", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_prism_vehicle_info_t, flight_time) }, \
          { "fpv_camera_selected", NULL, MAVLINK_TYPE_UINT8_T, 0, 9, offsetof(mavlink_prism_vehicle_info_t, fpv_camera_selected) }, \
+         { "kargo_box_loaded", NULL, MAVLINK_TYPE_UINT8_T, 0, 10, offsetof(mavlink_prism_vehicle_info_t, kargo_box_loaded) }, \
          } \
 }
 #else
 #define MAVLINK_MESSAGE_INFO_PRISM_VEHICLE_INFO { \
     "PRISM_VEHICLE_INFO", \
-    3, \
+    4, \
     {  { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 8, offsetof(mavlink_prism_vehicle_info_t, target_system) }, \
          { "flight_time", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_prism_vehicle_info_t, flight_time) }, \
          { "fpv_camera_selected", NULL, MAVLINK_TYPE_UINT8_T, 0, 9, offsetof(mavlink_prism_vehicle_info_t, fpv_camera_selected) }, \
+         { "kargo_box_loaded", NULL, MAVLINK_TYPE_UINT8_T, 0, 10, offsetof(mavlink_prism_vehicle_info_t, kargo_box_loaded) }, \
          } \
 }
 #endif
@@ -50,16 +53,18 @@ typedef struct __mavlink_prism_vehicle_info_t {
  * @param target_system   System ID 
  * @param flight_time   Total recorded flight time 
  * @param fpv_camera_selected   Value is zero if not selected 
+ * @param kargo_box_loaded   Value is 0 if the box is not loaded 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_prism_vehicle_info_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint8_t target_system, uint64_t flight_time, uint8_t fpv_camera_selected)
+                               uint8_t target_system, uint64_t flight_time, uint8_t fpv_camera_selected, uint8_t kargo_box_loaded)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN];
     _mav_put_uint64_t(buf, 0, flight_time);
     _mav_put_uint8_t(buf, 8, target_system);
     _mav_put_uint8_t(buf, 9, fpv_camera_selected);
+    _mav_put_uint8_t(buf, 10, kargo_box_loaded);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN);
 #else
@@ -67,6 +72,7 @@ static inline uint16_t mavlink_msg_prism_vehicle_info_pack(uint8_t system_id, ui
     packet.flight_time = flight_time;
     packet.target_system = target_system;
     packet.fpv_camera_selected = fpv_camera_selected;
+    packet.kargo_box_loaded = kargo_box_loaded;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN);
 #endif
@@ -84,17 +90,19 @@ static inline uint16_t mavlink_msg_prism_vehicle_info_pack(uint8_t system_id, ui
  * @param target_system   System ID 
  * @param flight_time   Total recorded flight time 
  * @param fpv_camera_selected   Value is zero if not selected 
+ * @param kargo_box_loaded   Value is 0 if the box is not loaded 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_prism_vehicle_info_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint8_t target_system,uint64_t flight_time,uint8_t fpv_camera_selected)
+                                   uint8_t target_system,uint64_t flight_time,uint8_t fpv_camera_selected,uint8_t kargo_box_loaded)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN];
     _mav_put_uint64_t(buf, 0, flight_time);
     _mav_put_uint8_t(buf, 8, target_system);
     _mav_put_uint8_t(buf, 9, fpv_camera_selected);
+    _mav_put_uint8_t(buf, 10, kargo_box_loaded);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN);
 #else
@@ -102,6 +110,7 @@ static inline uint16_t mavlink_msg_prism_vehicle_info_pack_chan(uint8_t system_i
     packet.flight_time = flight_time;
     packet.target_system = target_system;
     packet.fpv_camera_selected = fpv_camera_selected;
+    packet.kargo_box_loaded = kargo_box_loaded;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN);
 #endif
@@ -120,7 +129,7 @@ static inline uint16_t mavlink_msg_prism_vehicle_info_pack_chan(uint8_t system_i
  */
 static inline uint16_t mavlink_msg_prism_vehicle_info_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_prism_vehicle_info_t* prism_vehicle_info)
 {
-    return mavlink_msg_prism_vehicle_info_pack(system_id, component_id, msg, prism_vehicle_info->target_system, prism_vehicle_info->flight_time, prism_vehicle_info->fpv_camera_selected);
+    return mavlink_msg_prism_vehicle_info_pack(system_id, component_id, msg, prism_vehicle_info->target_system, prism_vehicle_info->flight_time, prism_vehicle_info->fpv_camera_selected, prism_vehicle_info->kargo_box_loaded);
 }
 
 /**
@@ -134,7 +143,7 @@ static inline uint16_t mavlink_msg_prism_vehicle_info_encode(uint8_t system_id, 
  */
 static inline uint16_t mavlink_msg_prism_vehicle_info_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_prism_vehicle_info_t* prism_vehicle_info)
 {
-    return mavlink_msg_prism_vehicle_info_pack_chan(system_id, component_id, chan, msg, prism_vehicle_info->target_system, prism_vehicle_info->flight_time, prism_vehicle_info->fpv_camera_selected);
+    return mavlink_msg_prism_vehicle_info_pack_chan(system_id, component_id, chan, msg, prism_vehicle_info->target_system, prism_vehicle_info->flight_time, prism_vehicle_info->fpv_camera_selected, prism_vehicle_info->kargo_box_loaded);
 }
 
 /**
@@ -144,16 +153,18 @@ static inline uint16_t mavlink_msg_prism_vehicle_info_encode_chan(uint8_t system
  * @param target_system   System ID 
  * @param flight_time   Total recorded flight time 
  * @param fpv_camera_selected   Value is zero if not selected 
+ * @param kargo_box_loaded   Value is 0 if the box is not loaded 
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_prism_vehicle_info_send(mavlink_channel_t chan, uint8_t target_system, uint64_t flight_time, uint8_t fpv_camera_selected)
+static inline void mavlink_msg_prism_vehicle_info_send(mavlink_channel_t chan, uint8_t target_system, uint64_t flight_time, uint8_t fpv_camera_selected, uint8_t kargo_box_loaded)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN];
     _mav_put_uint64_t(buf, 0, flight_time);
     _mav_put_uint8_t(buf, 8, target_system);
     _mav_put_uint8_t(buf, 9, fpv_camera_selected);
+    _mav_put_uint8_t(buf, 10, kargo_box_loaded);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO, buf, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_MIN_LEN, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_CRC);
 #else
@@ -161,6 +172,7 @@ static inline void mavlink_msg_prism_vehicle_info_send(mavlink_channel_t chan, u
     packet.flight_time = flight_time;
     packet.target_system = target_system;
     packet.fpv_camera_selected = fpv_camera_selected;
+    packet.kargo_box_loaded = kargo_box_loaded;
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO, (const char *)&packet, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_MIN_LEN, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_CRC);
 #endif
@@ -174,7 +186,7 @@ static inline void mavlink_msg_prism_vehicle_info_send(mavlink_channel_t chan, u
 static inline void mavlink_msg_prism_vehicle_info_send_struct(mavlink_channel_t chan, const mavlink_prism_vehicle_info_t* prism_vehicle_info)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_prism_vehicle_info_send(chan, prism_vehicle_info->target_system, prism_vehicle_info->flight_time, prism_vehicle_info->fpv_camera_selected);
+    mavlink_msg_prism_vehicle_info_send(chan, prism_vehicle_info->target_system, prism_vehicle_info->flight_time, prism_vehicle_info->fpv_camera_selected, prism_vehicle_info->kargo_box_loaded);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO, (const char *)prism_vehicle_info, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_MIN_LEN, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_CRC);
 #endif
@@ -188,13 +200,14 @@ static inline void mavlink_msg_prism_vehicle_info_send_struct(mavlink_channel_t 
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_prism_vehicle_info_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t target_system, uint64_t flight_time, uint8_t fpv_camera_selected)
+static inline void mavlink_msg_prism_vehicle_info_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t target_system, uint64_t flight_time, uint8_t fpv_camera_selected, uint8_t kargo_box_loaded)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
     _mav_put_uint64_t(buf, 0, flight_time);
     _mav_put_uint8_t(buf, 8, target_system);
     _mav_put_uint8_t(buf, 9, fpv_camera_selected);
+    _mav_put_uint8_t(buf, 10, kargo_box_loaded);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO, buf, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_MIN_LEN, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_CRC);
 #else
@@ -202,6 +215,7 @@ static inline void mavlink_msg_prism_vehicle_info_send_buf(mavlink_message_t *ms
     packet->flight_time = flight_time;
     packet->target_system = target_system;
     packet->fpv_camera_selected = fpv_camera_selected;
+    packet->kargo_box_loaded = kargo_box_loaded;
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO, (const char *)packet, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_MIN_LEN, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_CRC);
 #endif
@@ -244,6 +258,16 @@ static inline uint8_t mavlink_msg_prism_vehicle_info_get_fpv_camera_selected(con
 }
 
 /**
+ * @brief Get field kargo_box_loaded from prism_vehicle_info message
+ *
+ * @return   Value is 0 if the box is not loaded 
+ */
+static inline uint8_t mavlink_msg_prism_vehicle_info_get_kargo_box_loaded(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_uint8_t(msg,  10);
+}
+
+/**
  * @brief Decode a prism_vehicle_info message into a struct
  *
  * @param msg The message to decode
@@ -255,6 +279,7 @@ static inline void mavlink_msg_prism_vehicle_info_decode(const mavlink_message_t
     prism_vehicle_info->flight_time = mavlink_msg_prism_vehicle_info_get_flight_time(msg);
     prism_vehicle_info->target_system = mavlink_msg_prism_vehicle_info_get_target_system(msg);
     prism_vehicle_info->fpv_camera_selected = mavlink_msg_prism_vehicle_info_get_fpv_camera_selected(msg);
+    prism_vehicle_info->kargo_box_loaded = mavlink_msg_prism_vehicle_info_get_kargo_box_loaded(msg);
 #else
         uint8_t len = msg->len < MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN? msg->len : MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN;
         memset(prism_vehicle_info, 0, MAVLINK_MSG_ID_PRISM_VEHICLE_INFO_LEN);
