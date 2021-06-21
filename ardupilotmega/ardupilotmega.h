@@ -478,6 +478,18 @@ typedef enum GOPRO_BURST_RATE
 #endif
 
 /** @brief  */
+#ifndef HAVE_ENUM_MAV_CMD_DO_AUX_FUNCTION_SWITCH_LEVEL
+#define HAVE_ENUM_MAV_CMD_DO_AUX_FUNCTION_SWITCH_LEVEL
+typedef enum MAV_CMD_DO_AUX_FUNCTION_SWITCH_LEVEL
+{
+   MAV_CMD_DO_AUX_FUNCTION_SWITCH_LEVEL_LOW=0, /* Switch Low. |Reserved (default:0)| Reserved (default:0)| Reserved (default:0)| Reserved (default:0)| Reserved (default:0)| Reserved (default:0)| Reserved (default:0)|  */
+   MAV_CMD_DO_AUX_FUNCTION_SWITCH_LEVEL_MIDDLE=1, /* Switch Middle. |Reserved (default:0)| Reserved (default:0)| Reserved (default:0)| Reserved (default:0)| Reserved (default:0)| Reserved (default:0)| Reserved (default:0)|  */
+   MAV_CMD_DO_AUX_FUNCTION_SWITCH_LEVEL_HIGH=2, /* Switch High. |Reserved (default:0)| Reserved (default:0)| Reserved (default:0)| Reserved (default:0)| Reserved (default:0)| Reserved (default:0)| Reserved (default:0)|  */
+   MAV_CMD_DO_AUX_FUNCTION_SWITCH_LEVEL_ENUM_END=3, /*  | */
+} MAV_CMD_DO_AUX_FUNCTION_SWITCH_LEVEL;
+#endif
+
+/** @brief  */
 #ifndef HAVE_ENUM_LED_CONTROL_PATTERN
 #define HAVE_ENUM_LED_CONTROL_PATTERN
 typedef enum LED_CONTROL_PATTERN
